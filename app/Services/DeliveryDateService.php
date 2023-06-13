@@ -13,12 +13,17 @@ class DeliveryDateService
     private $numOfChoices = 5;
 
     // 都道府県によって配送日をずらす設定
-    private $prefectureDelay = ['北海道' => 2, '沖縄県' => 3];
+    const DELIVERY_AREA = [
+        '本州・四国・九州' => 1,
+        '北海道' => 2,
+        '沖縄県' => 3
+    ];
 
     const DELAY_BORDER = '15:00';
 
-    public function getDeliveryDates($currentDate, $orderTime, $prefecture)
+    public function getDeliveryDates($currentDate, $orderTime, $deliveryArea = '')
     {
+        if (!$currentDate || !$orderTime) return false;
         $dates = [];
         $startDate = Carbon::parse($currentDate);
         $delay = $this->minDeliveryDays;
@@ -31,8 +36,8 @@ class DeliveryDateService
         }
 
         // 都道府県の選択でヒットしたら、その数値分配送日をずらす
-        if (array_key_exists($prefecture, $this->prefectureDelay)) {
-            $delay += $this->prefectureDelay[$prefecture];
+        if (array_key_exists($deliveryArea, self::DELIVERY_AREA)) {
+            $delay += self::DELIVERY_AREA[$deliveryArea];
         }
 
         // 配達可能日の最初の日を設定

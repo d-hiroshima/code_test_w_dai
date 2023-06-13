@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Services\DeliveryDateService;
 
 class OrderController extends Controller
@@ -10,7 +9,8 @@ class OrderController extends Controller
     public function index()
     {
         $deliveryDateService = new DeliveryDateService();
-        return view('index', compact($deliveryDateService));
+        $deliveryArea = $deliveryDateService::DELIVERY_AREA;
+        return view('index', compact('deliveryArea'));
     }
 
     public function getDate($deliveryArea)

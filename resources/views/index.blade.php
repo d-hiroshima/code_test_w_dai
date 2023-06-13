@@ -15,7 +15,7 @@
                     <div class="form-group">
                         <label for="deliveryAreaSelect">配送エリア</label>
                         <select class="form-control" id="deliveryAreaSelect" name="deliveryAreaSelect">
-                            @foreach(config('const.deliveryArea') as $key => $val)
+                            @foreach($deliveryArea as $key => $val)
                                 <option value="{{ $key }}">{{ $key }}</option>
                             @endforeach
                         </select>
@@ -23,7 +23,7 @@
                     <div class="form-group">
                         <label for="deliveryDateSelect">配送希望日</label>
                         <select class="form-control" id="deliveryDateSelect" name="deliveryDateSelect">
-                            @foreach(app(\App\Services\DeliveryDateService::class)->getDeliveryDates(date('Y-m-d'), date('H:i'), 2) as $date)
+                            @foreach(app(\App\Services\DeliveryDateService::class)->getDeliveryDates(date('Y-m-d'), date('H:i')) as $date)
                                 <option value="{{ $date }}">{{ $date }}</option>
                             @endforeach
                         </select>
